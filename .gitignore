@@ -1,3 +1,12 @@
 env
+data/dataset
 data/processed
 data/raw
+models/saved_models
+runs
+venv/
+*.dylib
+
+__pycache__/
+*.pyc
+*.pyo
