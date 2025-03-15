@@ -31,10 +31,13 @@ def get_config():
     parser.add_argument("--kernel_size", type=int, default=config['kernel_size'], help="Kernel size")
     parser.add_argument("--dataset_dir", type=str, default=config['dataset_dir'], help="Dataset directory")
     parser.add_argument("--model_name", type=str, choices=['xcpatchtst', 'patchtst', 'dlinear'], default=config['model_name'], help="Model type to use")
-
+    parser.add_argument("--tickers", type=str, default="AAPL,MSFT,AMZN", help="Comma-separated list of tickers")
+    
     args = parser.parse_args()
 
     # Update config with argparse values
     config.update(vars(args))
+
+    config['tickers'] = config['tickers'].split(',')
 
     return config
