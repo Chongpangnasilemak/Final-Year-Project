@@ -90,15 +90,21 @@ def train(model: torch.nn.Module,
           device: torch.device,
           shuffle=False,
           model_name: str = "model",  # Allow model name to be passed as a parameter
-          save_dir: str = "/Users/engchongyock/Desktop/XCPatchTST/models/saved_models"
+          save_dir: str = "models/saved_models"
           ):
 
+    save_dir = os.path.join(os.getcwd(), save_dir)
     os.makedirs(save_dir, exist_ok=True)
 
     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+
     model_save_path = os.path.join(save_dir, f"{model_name}_{timestamp}.pth")
 
-    log_dir = f"/Users/engchongyock/Desktop/XCPatchTST/runs/{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
+    log_dir = os.path.join(os.getcwd(), "runs", timestamp)
+    os.makedirs(log_dir, exist_ok=True) 
+    
+    print(f"Model will be saved to: {model_save_path}")
+    print(f"Logs will be stored in: {log_dir}")
     
     # Initialize TensorBoard writer with dynamic log directory
     writer = SummaryWriter(log_dir=log_dir)
