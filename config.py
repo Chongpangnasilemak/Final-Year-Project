@@ -31,8 +31,7 @@ def get_config():
     parser.add_argument("--kernel_size", type=int, default=config['kernel_size'], help="Kernel size")
     parser.add_argument("--dataset_dir", type=str, default=config['dataset_dir'], help="Dataset directory")
     parser.add_argument("--model_name", type=str, choices=['xcpatchtst', 'patchtst', 'dlinear'], default=config['model_name'], help="Model type to use")
-    parser.add_argument("--tickers", type=str, default="AAPL, MSFT, AMZN, ABNB, ADBE, ADI, ADP, ADSK, AEP, AMAT, AMD, AMGN, ANSS, APP, ARM, ASML, AVGO, AXON, AZN, BIIB, BKNG, BKR, CCEP, CDNS, CDW, CEG, CHTR, CMCSA, COST, CPRT, CRWD, CSCO, CSGP, CSX, CTAS, CTSH, DASH, DDOG, DXCM, EA, EXC, FANG, FAST, FTNT, GEHC, GFS, GILD, GOOG, GOOGL, HON, IDXX, INTC, INTU, ISRG, KDP, KHC, KLAC, LIN, LRCX, LULU, MAR, MCHP, MDB, MDLZ, MELI, META, MNST, MRVL, MSTR, MU, NFLX, NVDA, NXPI, ODFL, ON, ORLY, PANW, PAYX, PCAR, PDD, PEP, PLTR, PYPL, QCOM, REGN, ROP, ROST, SBUX, SNPS, TEAM, TMUS, TSLA, TTD, TTWO, TXN, VRSK, VRTX, WBD, WDAY, XEL, ZS", help="Comma-separated list of tickers")
-    
+    parser.add_argument("--tickers", type=str, default="AAPL, MSFT, AMZN", help="Comma-separated list of tickers")
         
     args = parser.parse_args()
 
