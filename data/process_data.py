@@ -3,7 +3,9 @@ import pandas as pd
 import sys
 from datetime import datetime
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+parent_dir = os.path.abspath(os.path.join(os.getcwd(), ''))
+sys.path.append(parent_dir)
+
 from config import get_config
 
 def process_data():
