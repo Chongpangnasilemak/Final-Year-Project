@@ -11,7 +11,9 @@ from tqdm import tqdm
 import sys
 import os
 
-sys.path.append(os.path.abspath('/Users/engchongyock/Desktop/XCPatchTST'))
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(parent_dir)
+
 from config import get_config
 from utils.helper import create_crosschannel_patchtst, create_dlinear,create_patchtst
 from data.data_loader import create_dataloader
