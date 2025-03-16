@@ -72,12 +72,17 @@ def train_step(model: torch.nn.Module,
     avg_train_loss = train_loss / len(dataloader)
     avg_train_smape = train_smape / len(dataloader)
     
+    # Calculate MAE and NMAE (Normalized MAE)
+    avg_train_mae = mean_absolute_error(all_labels, all_preds)
+    range_labels = max(all_labels) - min(all_labels)  # Compute the range of true labels
+    avg_train_nmae = avg_train_mae / range_labels if range_labels != 0 else 0  # Normalized MAE
+    
     # Calculate MAE, MSE, and R2
     avg_train_mae = mean_absolute_error(all_labels, all_preds)
     avg_train_mse = mean_squared_error(all_labels, all_preds)
     avg_train_r2 = r2_score(all_labels, all_preds)
     
-    return avg_train_loss, avg_train_smape, avg_train_mae, avg_train_mse, avg_train_r2
+    return avg_train_loss, avg_train_smape, avg_train_mae, avg_train_nmae, avg_train_mse, avg_train_r2
 
 
 def train(model: torch.nn.Module, 
@@ -114,11 +119,13 @@ def train(model: torch.nn.Module,
         "train_loss": [],
         "train_smape": [],
         "train_mae": [],
+        "train_nmae": [],
         "train_mse": [],
         "train_r2": [],
         "test_loss": [],
         "test_smape": [],
         "test_mae": [],
+        "test_nmae": [],
         "test_mse": [],
         "test_r2": []
     }
@@ -127,12 +134,12 @@ def train(model: torch.nn.Module,
     
     for epoch in tqdm(range(epochs)):
         # Train step
-        train_loss, train_smape, train_mae, train_mse, train_r2 = train_step(
+        train_loss, train_smape, train_mae, train_nmae, train_mse, train_r2 = train_step(
             model=model, dataloader=train_dataloader, loss_fn=loss_fn, optimizer=optimizer, device=device
         )
 
         # Test step
-        test_loss, test_smape, test_mae, test_mse, test_r2 = test_step(
+        test_loss, test_smape, test_mae, test_nmae, test_mse, test_r2 = test_step(
             model=model, dataloader=test_dataloader, loss_fn=loss_fn, device=device
         )
 
@@ -150,30 +157,34 @@ def train(model: torch.nn.Module,
 
         writer.add_scalar("Metrics/Train_SMAPE", train_smape, epoch)
         writer.add_scalar("Metrics/Train_MAE", train_mae, epoch)
+        writer.add_scalar("Metrics/Train_NMAE", train_nmae, epoch)
         writer.add_scalar("Metrics/Train_MSE", train_mse, epoch)
         writer.add_scalar("Metrics/Train_R2", train_r2, epoch)
 
         writer.add_scalar("Metrics/Test_SMAPE", test_smape, epoch)
         writer.add_scalar("Metrics/Test_MAE", test_mae, epoch)
+        writer.add_scalar("Metrics/Test_NMAE", test_nmae, epoch)
         writer.add_scalar("Metrics/Test_MSE", test_mse, epoch)
         writer.add_scalar("Metrics/Test_R2", test_r2, epoch)
 
         # Print training progress
         print(
             f"Epoch: {epoch+1} | "
-            f"Train Loss: {train_loss:.3f} | Train SMAPE: {train_smape:.3f} | Train MAE: {train_mae:.3f} | Train MSE: {train_mse:.3f} | Train R2: {train_r2:.3f} | "
-            f"Test Loss: {test_loss:.3f} | Test SMAPE: {test_smape:.3f} | Test MAE: {test_mae:.3f} | Test MSE: {test_mse:.3f} | Test R2: {test_r2:.3f}"
+            f"Train Loss: {train_loss:.3f} | Train SMAPE: {train_smape:.3f} | Train MAE: {train_mae:.3f}| Train NMAE: {train_nmae:.3f} | Train MSE: {train_mse:.3f} | Train R2: {train_r2:.3f} | "
+            f"Test Loss: {test_loss:.3f} | Test SMAPE: {test_smape:.3f} | Test MAE: {test_mae:.3f}| Test NMAE: {test_nmae:.3f} | Test MSE: {test_mse:.3f} | Test R2: {test_r2:.3f}"
         )
 
         # Save results
         results["train_loss"].append(train_loss)
         results["train_smape"].append(train_smape)
         results["train_mae"].append(train_mae)
+        results["train_nmae"].append(train_nmae)
         results["train_mse"].append(train_mse)
         results["train_r2"].append(train_r2)
         results["test_loss"].append(test_loss)
         results["test_smape"].append(test_smape)
         results["test_mae"].append(test_mae)
+        results["test_nmae"].append(test_nmae)
         results["test_mse"].append(test_mse)
         results["test_r2"].append(test_r2)
 

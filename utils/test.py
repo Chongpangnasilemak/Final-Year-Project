@@ -48,10 +48,14 @@ def test_step(model: torch.nn.Module,
     avg_val_loss = val_loss / len(dataloader)
     avg_val_smape = val_smape / len(dataloader) 
     
+    # Calculate MAE and NMAE (Normalized MAE)
+    avg_train_mae = mean_absolute_error(all_labels, all_preds)
+    range_labels = max(all_labels) - min(all_labels)  # Compute the range of true labels
+    avg_train_nmae = avg_train_mae / range_labels if range_labels != 0 else 0  # Normalized MAE
+    
     # Calculate MAE, MSE, and R2
     avg_val_mae = mean_absolute_error(all_labels, all_preds)
     avg_val_mse = mean_squared_error(all_labels, all_preds)
     avg_val_r2 = r2_score(all_labels, all_preds)
 
-
-    return avg_val_loss, avg_val_smape, avg_val_mae, avg_val_mse, avg_val_r2
+    return avg_val_loss, avg_val_smape, avg_val_mae, avg_train_nmae, avg_val_mse, avg_val_r2
