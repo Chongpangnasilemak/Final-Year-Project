@@ -17,7 +17,7 @@ def get_config():
         'raw_dataset_dir': 'data/raw',
         'processed_dataset_dir': 'data/processed',
         'ticker_threshold': 4000,
-        'dataset_dir': f"data/dataset/dataset_2025-03-14.csv"
+        'dataset_dir': f"/Users/engchongyock/Desktop/XCPatchTST/data/dataset/dataset_2025-03-16.csv"
     }
 
     parser = argparse.ArgumentParser(description="Training Configurations")
@@ -31,7 +31,7 @@ def get_config():
     parser.add_argument("--kernel_size", type=int, default=config['kernel_size'], help="Kernel size")
     parser.add_argument("--dataset_dir", type=str, default=config['dataset_dir'], help="Dataset directory")
     parser.add_argument("--model_name", type=str, choices=['xcpatchtst', 'patchtst', 'dlinear'], default=config['model_name'], help="Model type to use")
-    parser.add_argument("--tickers", type=str, default="AAPL, MSFT, AMZN", help="Comma-separated list of tickers")
+    parser.add_argument("--tickers", type=str, default="AAPL", help="Comma-separated list of tickers")
         
     args = parser.parse_args()
 
