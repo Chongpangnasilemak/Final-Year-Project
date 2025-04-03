@@ -1,7 +1,15 @@
 import argparse
 import os
+import datetime
 
 def get_config():
+    
+    # Get today's date in the format 'YYYY-MM-DD'
+    today_date = datetime.datetime.today().strftime('%Y-%m-%d')
+    
+    # Default dataset path based on today's date
+    default_dataset_dir = f"/content/Final-Year-Project/data/dataset/dataset_{today_date}.csv"
+
     # Default Config
     config = {
         'epochs': 10,
@@ -17,7 +25,7 @@ def get_config():
         'raw_dataset_dir': 'data/raw',
         'processed_dataset_dir': 'data/processed',
         'ticker_threshold': 1000,
-        'dataset_dir': f"/Users/engchongyock/Desktop/XCPatchTST/data/dataset/dataset_2025-03-16.csv"
+        'dataset_dir': default_dataset_dir
     }
 
     parser = argparse.ArgumentParser(description="Training Configurations")
