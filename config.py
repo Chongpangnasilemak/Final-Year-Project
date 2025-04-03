@@ -16,7 +16,7 @@ def get_config():
         'tickers': ["AAPL", "MSFT", "AMZN"],
         'raw_dataset_dir': 'data/raw',
         'processed_dataset_dir': 'data/processed',
-        'ticker_threshold': 4000,
+        'ticker_threshold': 1000,
         'dataset_dir': f"/Users/engchongyock/Desktop/XCPatchTST/data/dataset/dataset_2025-03-16.csv"
     }
 
