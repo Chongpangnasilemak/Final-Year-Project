@@ -51,8 +51,7 @@ def create_model(model_name, device, in_channels, config):
             pred_len=config['pred_len'],
             patch_size=config['patch_size'],
             stride=config['stride'],
-            d_model=config['d_model'],
-            kernel_size=config['kernel_size']
+            d_model=config['d_model']
         )
     else:
         return create_dlinear(
