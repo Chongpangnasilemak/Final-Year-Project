@@ -14,7 +14,7 @@ def get_config():
     config = {
         'epochs': 10,
         'model_name':'xcpatchtst',
-        'seq_len': 64,
+        'seq_len': 16,
         'pred_len': 1,
         'batch_size': 8,
         'stride': 4,
